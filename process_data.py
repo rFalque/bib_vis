@@ -1,7 +1,7 @@
 import json
 
+# open the 
 f = open('data/library.bib', 'r')
-
 publications = []
 for line in f:
     if 'author' in line[0:15]:
@@ -17,16 +17,16 @@ for line in f:
         line = line.replace('.', '')
         publications.append(line)
         
-#publications
+# create the nodes (authors)
 authors_list = []
 for authors in publications:
-    authors_ = authors.split(' and ')
+    authors_ = authors.split(' and ') # we assume that each authors are separated by ' and ' (standard from Mendeley)
     for author in authors_:
         author = author[0:(author.index(' ')+2)]
         if not author in authors_list:
             authors_list.append(author)
 
-#remove the authors with few publications
+#remove the authors with a single publications
 publication_quantity = []
 clean_authors_list = []
 for author in authors_list:
@@ -40,26 +40,22 @@ for author in authors_list:
 		print('%s has published %d papers' % (author, i))
 		clean_authors_list.append(author)
 
-print()
+print('Final authors list')
 print(clean_authors_list)
 
 authors_list = clean_authors_list
 
+# add the edges (co-authors)
 data = []
 i = 0
 for author in authors_list:
-	#author = author[0:(author.index(' ')+2)]
 	dico = dict()
 	links = []
 	for authors_publication in publications:
 		if author in authors_publication:
-			#print(authors_publication)
-			#print author
 			authors_ = authors_publication.split(' and ')
-			#authors_.remove(author)
 			for name in authors_:
 				name = name[0:(name.index(' ')+2)]
-				#print(name)
 				if name in authors_list:
 					links.append(name)
 	dico['name'] = author
@@ -68,6 +64,6 @@ for author in authors_list:
 	data.append(dico)
 	i = i+1
 
-
+# write file in .json
 with open('data/data.json', 'w') as outfile:
     json.dump(data, outfile)
