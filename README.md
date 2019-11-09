@@ -8,6 +8,6 @@ Run the 'process_data.py' file to create the JSON file and update the HTML file
 python process_data.py
 ```
 
-The dynamic result of this visualisation is available [here](https://rfalque.github.io/bibvis.html).
+The dynamic result of this visualisation is available [here](https://rfalque.github.io/pages/bibvis.html).
 
 :heavy_exclamation_mark: In order to be interpreted the JSON file has to be processed by a server (or emulated locally).
